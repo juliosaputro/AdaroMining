@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Pressable,
   TouchableOpacity,
+  Alert
 } from 'react-native';
 import {Checkbox} from 'react-native-paper';
 import {normalize, fontSize} from '../../utils/responsive';
@@ -64,7 +65,7 @@ export default function () {
       console.log('massage :', res_login.error_res.data.data.info)
       dispatch(errorFormLogin(res_login.error_res.data.data.info))
     }
-    console.log(errorLoginReducer.message, 'error msg')
+    // console.log(errorLoginReducer.message, 'error msg')
     },[res_login.failed])
 
   const [pwdVisibility, setPwdVisibility] = useState(true);
@@ -79,6 +80,15 @@ export default function () {
       setPwdVisibility(!pwdVisibility);
     }
   };
+
+  useEffect(()=>{
+    if(res_login.failed){
+      Alert.alert(
+        errorLoginReducer.message
+      )
+    }
+  },[res_login.failed, errorLoginReducer.message])
+
 
   return (
     <>
