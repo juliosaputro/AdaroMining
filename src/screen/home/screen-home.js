@@ -1,3 +1,4 @@
+import React from 'react';
 import {Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';

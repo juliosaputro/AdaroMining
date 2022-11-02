@@ -16,7 +16,6 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ModalForm from '../../components/ModalForm';
 import {updateFormLogin} from '../../reducers/formLogin';
-import useDebounce from '../../custom_hook/useDebounce';
 import { usePostData } from '../../helper/request';
 import {updateUserToken} from'../../reducers/authReducer';
 import { errorFormLogin } from '../../reducers/errorLoginReducer';
@@ -30,11 +29,11 @@ export default function () {
 
   //login reducer
   const {formLogin} = useSelector(s => s);
-  const {errorLogin} = useSelector(s=>s)
-  const {value} = [formLogin,authUser, errorFormLogin];
+  const {errorLoginReducer} = useSelector(s=>s)
+  const {value} = [formLogin,authUser,errorFormLogin];
   
   const {authUser} = useSelector(s =>s)
-  console.log(errorLogin.message, 'error msg')
+ 
   // const {val} = authUser
 
   //usepostData
@@ -42,14 +41,10 @@ export default function () {
 
   // function login
   function do_login() {
-    console.table(par)
     let par = {
-      role: 'audito',
-		email: 'auditor@adaro.co.id',
-      	password: '12',
-		// role: formLogin.role.value,
-		// email: formLogin.email.value,
-    //   	password: formLogin.password.value,
+		role: formLogin.role.value,
+		email: formLogin.email.value,
+      	password: formLogin.password.value,
     };
     func_login(par);
   }
@@ -57,9 +52,9 @@ export default function () {
   useEffect(()=>{
 	if(res_login.success){
 
-		console.log('token :', res_login.success_res.token)
-    dispatch(updateUserToken(res_login.success_res.token))
-    // navigation.navigate('Home')
+		console.log('token :', res_login.success_res.data.token)
+    dispatch(updateUserToken(res_login.success_res.data.token))
+    navigation.navigate('Home')
 	}
   },[res_login.success])
 
@@ -69,6 +64,7 @@ export default function () {
       console.log('massage :', res_login.error_res.data.data.info)
       dispatch(errorFormLogin(res_login.error_res.data.data.info))
     }
+    console.log(errorLoginReducer.message, 'error msg')
     },[res_login.failed])
 
   const [pwdVisibility, setPwdVisibility] = useState(true);

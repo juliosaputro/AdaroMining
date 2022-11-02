@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator()
 export default function () {
     return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='Position' screenOptions={{
+        <Stack.Navigator initialRouteName='Splash' screenOptions={{
             headerShown: false,
         }}>
             <Stack.Screen name='Splash' component={screen_splash}/>
