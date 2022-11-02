@@ -1,6 +1,7 @@
 package com.adarominingv2;
 
 import com.facebook.react.ReactActivity;
+import android.os.Bundle;
 
 public class MainActivity extends ReactActivity {
 
